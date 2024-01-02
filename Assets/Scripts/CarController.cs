@@ -4,15 +4,23 @@ using UnityEngine;
 
 
 public class CarController : MonoBehaviour
-{   
+{
     private Rigidbody playerRB;
     public WheelColliders colliders;
     public WheelMeshes wheelMeshes;
+   
     public float gasInput;
+    public float brakeInput;
     public float steeringInput;
+    
     public float motorPower;
+    public float brakePower;
+    public float slipAngle;
     private float speed;
     public AnimationCurve steeringCurve;
+
+
+
     void Start()
     {
         playerRB = GetComponent<Rigidbody>();  
@@ -30,15 +38,51 @@ public class CarController : MonoBehaviour
     {
         gasInput = Input.GetAxis("Vertical");
         steeringInput = Input.GetAxis("Horizontal");
+        slipAngle = Vector3.Angle(transform.forward, playerRB.velocity - transform.forward);
+
+        //fixed code to brake even after going on reverse by Andrew Alex 
+        float movingDirection = Vector3.Dot(transform.forward, playerRB.velocity);
+        if (movingDirection < -0.5f && gasInput > 0)
+        {
+            brakeInput = Mathf.Abs(gasInput);
+        }
+        else if (movingDirection > 0.5f && gasInput < 0)
+        {
+            brakeInput = Mathf.Abs(gasInput);
+        }
+        else
+        {
+            brakeInput = 0;
+        }
+
+
+    }
+    void ApplyBrake()
+    {
+        colliders.FRWheel.brakeTorque = brakeInput * brakePower * 0.7f;
+        colliders.FLWheel.brakeTorque = brakeInput * brakePower * 0.7f;
+
+        colliders.BR2Wheel.brakeTorque = brakeInput * brakePower * 0.3f;
+        colliders.BL2Wheel.brakeTorque = brakeInput * brakePower * 0.3f;
+
+
     }
     void ApplyMotor()
     {
-        colliders.BL2Wheel.motorTorque = motorPower * gasInput;
+
         colliders.BR2Wheel.motorTorque = motorPower * gasInput;
+        colliders.BL2Wheel.motorTorque = motorPower * gasInput;
+
     }
     void ApplySteering()
     {
+
         float steeringAngle = steeringInput * steeringCurve.Evaluate(speed);
+        if (slipAngle < 120f)
+        {
+            steeringAngle += Vector3.SignedAngle(transform.forward, playerRB.velocity + transform.forward, Vector3.up);
+        }
+        steeringAngle = Mathf.Clamp(steeringAngle, -90f, 90f);
         colliders.FRWheel.steerAngle = steeringAngle;
         colliders.FLWheel.steerAngle = steeringAngle;
     }
