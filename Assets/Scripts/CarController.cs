@@ -80,5 +80,3 @@ public class WheelMeshes
     public MeshRenderer BL2Wheel;
     public MeshRenderer BR2Wheel;
 }
-
-
