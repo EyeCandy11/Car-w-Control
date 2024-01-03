@@ -2,45 +2,82 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class CarController : MonoBehaviour
 {
     private Rigidbody playerRB;
     public WheelColliders colliders;
     public WheelMeshes wheelMeshes;
-   
+
     public float gasInput;
     public float brakeInput;
     public float steeringInput;
-    
+
     public float motorPower;
     public float brakePower;
     public float slipAngle;
     private float speed;
     public AnimationCurve steeringCurve;
 
+    public MyButton gasPedal;
+    public MyButton brakePedal;
 
+    private float gyroSensitivity = 5.0f; // Adjust this value based on gyro sensitivity
+    private bool gyroEnabled;
+    private Gyroscope gyro;
 
     void Start()
     {
-        playerRB = GetComponent<Rigidbody>();  
+        playerRB = GetComponent<Rigidbody>();
+
+        // Check if gyro is available
+        gyroEnabled = SystemInfo.supportsGyroscope;
+
+        if (gyroEnabled)
+        {
+            gyro = Input.gyro;
+            gyro.enabled = true;
+        }
+        else
+        {
+            Debug.LogError("Gyroscope not supported on this device");
+        }
     }
+
     void Update()
     {
         speed = playerRB.velocity.magnitude;
         CheckInput();
         ApplyMotor();
-        ApplySteering(); 
+        ApplySteering();
+        ApplyBrake();
         ApplYWheelPositions();
     }
 
     void CheckInput()
     {
         gasInput = Input.GetAxis("Vertical");
-        steeringInput = Input.GetAxis("Horizontal");
+        if (gasPedal.isPressed)
+        {
+            gasInput += gasPedal.dampenPress;
+        }
+        if (brakePedal.isPressed)
+        {
+            gasInput -= brakePedal.dampenPress;
+        }
+
+        if (gyroEnabled)
+        {
+            // Use gyro input for steering
+            steeringInput = -gyro.rotationRate.x * gyroSensitivity;
+        }
+        else
+        {
+            // Use standard input for steering if gyro is not available
+            steeringInput = Input.GetAxis("Horizontal");
+        }
+
         slipAngle = Vector3.Angle(transform.forward, playerRB.velocity - transform.forward);
 
-        //fixed code to brake even after going on reverse by Andrew Alex 
         float movingDirection = Vector3.Dot(transform.forward, playerRB.velocity);
         if (movingDirection < -0.5f && gasInput > 0)
         {
@@ -54,16 +91,16 @@ public class CarController : MonoBehaviour
         {
             brakeInput = 0;
         }
-
-
     }
+
+    
     void ApplyBrake()
     {
         colliders.FRWheel.brakeTorque = brakeInput * brakePower * 0.7f;
         colliders.FLWheel.brakeTorque = brakeInput * brakePower * 0.7f;
 
-        colliders.BR2Wheel.brakeTorque = brakeInput * brakePower * 0.3f;
-        colliders.BL2Wheel.brakeTorque = brakeInput * brakePower * 0.3f;
+        colliders.BR2Wheel.brakeTorque = brakeInput * brakePower ;
+        colliders.BL2Wheel.brakeTorque = brakeInput * brakePower ;
 
 
     }
