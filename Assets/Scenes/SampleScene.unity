@@ -815,7 +815,6 @@ GameObject:
   - component: {fileID: 363569747}
   - component: {fileID: 363569749}
   - component: {fileID: 363569748}
-  - component: {fileID: 363569750}
   m_Layer: 5
   m_Name: TimeImage
   m_TagString: Untagged
@@ -880,23 +879,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 363569746}
   m_CullTransparentMesh: 1
---- !u!114 &363569750
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 363569746}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba62a061ebcb45148a6faa654a4a683e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  panel: {fileID: 429075348}
-  timeImage: {fileID: 363569748}
-  timeText: {fileID: 1992481102}
-  duration: 0.1
-  currentTime: 0
 --- !u!1 &393197896 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 3b634c7d472e87149893f9119cd4d5fe,
@@ -1520,7 +1502,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 3b634c7d472e87149893f9119cd4d5fe,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.2421577
+      value: -0.58
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3b634c7d472e87149893f9119cd4d5fe,
         type: 3}
@@ -3810,6 +3792,7 @@ GameObject:
   - component: {fileID: 1992481101}
   - component: {fileID: 1992481103}
   - component: {fileID: 1992481102}
+  - component: {fileID: 1992481104}
   m_Layer: 5
   m_Name: TimeText
   m_TagString: Untagged
@@ -3878,6 +3861,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1992481100}
   m_CullTransparentMesh: 1
+--- !u!114 &1992481104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1992481100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba62a061ebcb45148a6faa654a4a683e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  panel: {fileID: 429075348}
+  timeImage: {fileID: 363569748}
+  timeText: {fileID: 1992481102}
+  duration: 0.1
+  currentTime: 0
 --- !u!1001 &2114615596
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4093,7 +4093,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 3b634c7d472e87149893f9119cd4d5fe,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.2421577
+      value: 0.45
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3b634c7d472e87149893f9119cd4d5fe,
         type: 3}
@@ -4757,17 +4757,17 @@ MonoBehaviour:
   colliders:
     FLWheel: {fileID: 1769212124}
     FRWheel: {fileID: 1160562986}
-    BL1Wheel: {fileID: 0}
-    BR1Wheel: {fileID: 0}
-    BL2Wheel: {fileID: 0}
-    BR2Wheel: {fileID: 0}
+    BL1Wheel: {fileID: 1507470139}
+    BR1Wheel: {fileID: 280467558}
+    BL2Wheel: {fileID: 1889010645}
+    BR2Wheel: {fileID: 2125059840}
   wheelMeshes:
     FLWheel: {fileID: 2252102125112828824}
     FRWheel: {fileID: 2667177791671456532}
-    BL1Wheel: {fileID: 0}
-    BR1Wheel: {fileID: 0}
-    BL2Wheel: {fileID: 0}
-    BR2Wheel: {fileID: 0}
+    BL1Wheel: {fileID: 956895412312589536}
+    BR1Wheel: {fileID: 3015461276370327675}
+    BL2Wheel: {fileID: 9073374834273174734}
+    BR2Wheel: {fileID: 149877267941747403}
   gasInput: 0
   brakeInput: 0
   steeringInput: 0
