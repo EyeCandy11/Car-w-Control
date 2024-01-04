@@ -5,6 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuManager : MonoBehaviour
 {
+    public GameObject PausedPanel;
+    public void Start()
+    {
+        Time.timeScale = 1;
+    }
     public void HideObject(GameObject ObjHide)
     {
         object obj = ObjHide;
@@ -25,4 +30,10 @@ public class MainMenuManager : MonoBehaviour
         Application.Quit();
         Debug.Log("Quit!");
     }
+    public void ResetScene(string SceneName)
+    {
+        SceneManager.LoadScene(SceneName);
+    }
+
+
 }
