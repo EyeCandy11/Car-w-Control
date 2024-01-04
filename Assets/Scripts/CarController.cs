@@ -64,18 +64,9 @@ public class CarController : MonoBehaviour
         {
             gasInput -= brakePedal.dampenPress;
         }
-
-        if (gyroEnabled)
-        {
-            // Use gyro input for steering
-            steeringInput = -gyro.rotationRate.x * gyroSensitivity;
-        }
-        else
-        {
-            // Use standard input for steering if gyro is not available
-            steeringInput = Input.GetAxis("Horizontal");
-        }
-
+        
+        steeringInput = Input.acceleration.x;
+        
 
         float movingDirection = Vector3.Dot(transform.forward, playerRB.velocity);
         if (movingDirection < -0.5f && gasInput > 0)
